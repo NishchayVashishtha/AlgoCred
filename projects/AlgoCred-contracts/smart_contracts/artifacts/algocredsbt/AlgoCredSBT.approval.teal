@@ -1,0 +1,130 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 0 1 2
+    // smart_contracts/algocredsbt/contract.py:3
+    // class AlgoCredSBT(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@5
+    pushbytes 0x5ef4667a // method "mint_certificate(string,string)uint64"
+    txna ApplicationArgs 0
+    match main_mint_certificate_route@3
+    err
+
+main_mint_certificate_route@3:
+    // smart_contracts/algocredsbt/contract.py:4
+    // @arc4.abimethod
+    txn OnCompletion
+    !
+    txn ApplicationID
+    &&
+    assert
+    b mint_certificate
+
+main___algopy_default_create@5:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// smart_contracts.algocredsbt.contract.AlgoCredSBT.mint_certificate[routing]() -> void:
+mint_certificate:
+    // smart_contracts/algocredsbt/contract.py:4
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_2 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_0 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_2 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // smart_contracts/algocredsbt/contract.py:6-17
+    // # Step: Layer-1 Soulbound Logic using ASAs
+    // # 'default_frozen=True' ensures the student cannot transfer it
+    // mint_txn = itxn.AssetConfig(
+    //     asset_name=asset_name,
+    //     unit_name=unit_name,
+    //     total=1,
+    //     decimals=0,
+    //     default_frozen=True, # Immutable property for SBT
+    //     manager=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    //     clawback=Global.current_application_address,
+    // ).submit()
+    itxn_begin
+    // smart_contracts/algocredsbt/contract.py:14
+    // manager=Global.current_application_address,
+    global CurrentApplicationAddress
+    // smart_contracts/algocredsbt/contract.py:15-16
+    // freeze=Global.current_application_address,
+    // clawback=Global.current_application_address,
+    dupn 2
+    itxn_field ConfigAssetClawback
+    itxn_field ConfigAssetFreeze
+    itxn_field ConfigAssetManager
+    // smart_contracts/algocredsbt/contract.py:13
+    // default_frozen=True, # Immutable property for SBT
+    intc_1 // 1
+    itxn_field ConfigAssetDefaultFrozen
+    // smart_contracts/algocredsbt/contract.py:12
+    // decimals=0,
+    intc_0 // 0
+    itxn_field ConfigAssetDecimals
+    // smart_contracts/algocredsbt/contract.py:11
+    // total=1,
+    intc_1 // 1
+    itxn_field ConfigAssetTotal
+    itxn_field ConfigAssetUnitName
+    itxn_field ConfigAssetName
+    // smart_contracts/algocredsbt/contract.py:6-8
+    // # Step: Layer-1 Soulbound Logic using ASAs
+    // # 'default_frozen=True' ensures the student cannot transfer it
+    // mint_txn = itxn.AssetConfig(
+    pushint 3 // acfg
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/algocredsbt/contract.py:6-17
+    // # Step: Layer-1 Soulbound Logic using ASAs
+    // # 'default_frozen=True' ensures the student cannot transfer it
+    // mint_txn = itxn.AssetConfig(
+    //     asset_name=asset_name,
+    //     unit_name=unit_name,
+    //     total=1,
+    //     decimals=0,
+    //     default_frozen=True, # Immutable property for SBT
+    //     manager=Global.current_application_address,
+    //     freeze=Global.current_application_address,
+    //     clawback=Global.current_application_address,
+    // ).submit()
+    itxn_submit
+    itxn CreatedAssetID
+    // smart_contracts/algocredsbt/contract.py:4
+    // @arc4.abimethod
+    itob
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return

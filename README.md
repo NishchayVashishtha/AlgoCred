@@ -9,7 +9,6 @@
 
 Built exclusively for the **CryptoForge Hackathon**, AlgoCred aligns with the vision of driving Web3 adoption by providing a highly scalable, real-world dApp that solves a billion-dollar problem: Academic and Professional Forgery.
 
-[Image of Decentralized Identity and Verifiable Credentials architecture on blockchain]
 
 ---
 

@@ -101,22 +101,22 @@ cd projects/AlgoCred-frontend
 npm run dev
 ```
 ## Testing the Live Protocol (Jury Guide)
-###1. Connect:
+1. Connect:
 Click "Connect Wallet" and link your Pera Wallet (Testnet).
 
-###2. Govern: 
+2. Govern: 
 Toggle the "Simulate Sign" button in the Multi-Sig panel to authorize the transaction.
 
-###3. Issue: 
+3. Issue: 
 Enter mock student details, upload a PDF document, and click "Mint Soulbound Asset".
 
-###4. Capture: 
+4. Capture: 
 Copy the generated W3C-compliant Asset ID from the Success Modal.
 
-###5. Verify:
+5. Verify:
 Paste the Asset ID into the Public Verification tab and hit "Verify".
 
-###6. Explore: 
+6. Explore: 
 Toggle the ZKP Mode and explore the Social Oracle (LinkedIn) integrations to see the future of Web3 identity.
 
 # Designed, Architected, and Built with ❤️ for DTU CryptoForge.
